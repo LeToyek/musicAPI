@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"musicAPI/src/controllers"
+
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	fmt.Print("asodkoasd")
+	router := gin.Default()
+
+	router.POST("/login", controllers.Login())
+
+	router.Run("localhost:5000")
 }

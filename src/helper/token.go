@@ -42,7 +42,7 @@ func GenerateToken(userID string) (string, string, time.Time) {
 	return tokenStr, refTokenStr, expTime
 }
 
-func ValidateToken(signedToken string) *CustomClaims {
+func ValidateToken(signedToken string) (*CustomClaims, error) {
 	token, err := jwt.ParseWithClaims(
 		signedToken,
 		&CustomClaims{},
@@ -59,5 +59,5 @@ func ValidateToken(signedToken string) *CustomClaims {
 	if claims.ExpiresAt < time.Now().Local().Unix() {
 		panic(err)
 	}
-	return claims
+	return claims, err
 }
