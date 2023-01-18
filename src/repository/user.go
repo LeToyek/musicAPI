@@ -14,11 +14,11 @@ type UserRepository interface {
 }
 
 func (r *Repository) AddUser(user entities.User) {
-	r.DB.MustExec(query.QAddUser, user.ID, user.Username, user.Email, user.Password, user.RefreshToken, user.Created_at, user.Updated_at)
+	r.DB.MustExec(query.QAddUser, user.ID, user.Username, user.Email, user.Password, user.Refresh_Token, user.Created_at, user.Updated_at)
 }
 func (r *Repository) GetUser(email string, password string) (entities.User, error) {
 	result := entities.User{}
-	err := r.DB.Get(&result, query.QGetUser)
+	err := r.DB.Get(&result, query.QGetUser, email, password)
 	return result, err
 }
 

@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"musicAPI/src/entities"
-	"musicAPI/src/helper"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,7 +20,7 @@ var DummyUsers = []entities.User{
 	},
 }
 
-func (c *Controller) Login() gin.HandlerFunc {
+func (con *Controller) Login() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var user entities.User
 		if err := c.BindJSON(&user); err != nil {
@@ -30,16 +29,20 @@ func (c *Controller) Login() gin.HandlerFunc {
 			})
 			return
 		}
-		for _, v := range DummyUsers {
-			if user.Username == v.Username && user.Password == v.Password {
-				token, refreshToken, _ := helper.GenerateToken(v.ID)
-				c.Request.Header.Set("token", token)
-				c.JSON(http.StatusOK, gin.H{
-					"token":         token,
-					"refresh_token": refreshToken,
-					"header_token":  c.Request.Header.Get("token"),
-				})
-			}
+		user, err := con.Service.GetUser(user.Email, user.Password)
+		if err != nil {
+			panic(err)
 		}
+		// for _, v := range DummyUsers {
+		// 	if user.Username == v.Username && user.Password == v.Password {
+		// 		token, refreshToken, _ := helper.GenerateToken(v.ID)
+		// 		c.Request.Header.Set("token", token)
+		// 		c.JSON(http.StatusOK, gin.H{
+		// 			"token":         token,
+		// 			"refresh_token": refreshToken,
+		// 			"header_token":  c.Request.Header.Get("token"),
+		// 		})
+		// 	}
+		// }
 	}
 }
