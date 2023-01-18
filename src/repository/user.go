@@ -27,5 +27,5 @@ func (r *Repository) DeleteUser(user entities.User) error {
 	return err
 }
 func (r *Repository) EditUser(user entities.User, newUser entities.User) error {
-	return errors.New("Unsupported feature, not finished yet")
+	return errors.New("unsupported feature, not finished yet")
 }
