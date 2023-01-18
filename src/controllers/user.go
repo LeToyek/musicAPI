@@ -21,7 +21,7 @@ var DummyUsers = []entities.User{
 	},
 }
 
-func Login() gin.HandlerFunc {
+func (c *Controller) Login() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var user entities.User
 		if err := c.BindJSON(&user); err != nil {
