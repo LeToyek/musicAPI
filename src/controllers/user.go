@@ -5,19 +5,15 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
-var DummyUsers = []entities.User{
-	{
-		ID:       "192037801297",
-		Username: "jepri123",
-		Password: "matamu",
-	},
-	{
-		ID:       "102938012938",
-		Username: "samsul234",
-		Password: "lengser1",
-	},
+type CustomValidator struct {
+	validator *validator.Validate
+}
+
+func (cv *CustomValidator) Validate(i interface{}) error {
+	return cv.validator.Struct(i)
 }
 
 func (con *Controller) Login() gin.HandlerFunc {
